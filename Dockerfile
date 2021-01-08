@@ -1,11 +1,21 @@
 FROM pulimento/alpine-hugo-firebase
+MAINTAINER Olaf Andersen <fatyogi@gmail.com>
 
-# Download and install latest hugo
-ENV HUGO_VERSION latest
-ENV HUGO_BINARY hugo_${HUGO_VERSION}_Linux-64bit.deb
+ENV HUGO_VERSION 0.80.0
+ENV HUGO_EXTENDED_BINARY hugo_extended_${HUGO_VERSION}_Linux-64bit
 
-ADD https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_BINARY} /tmp/hugo.deb
-RUN dpkg -i /tmp/hugo.deb && rm /tmp/hugo.deb
+# Install Firebase tools
+#RUN npm install -g firebase-tools
+
+# Download and install hugo
+ADD https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_EXTENDED_BINARY}.tar.gz /tmp/hugo.tar.gz
+RUN mkdir /usr/local/hugo \
+	&& tar xzf /tmp/hugo.tar.gz -C /usr/local/hugo/ \
+	&& ln -s /usr/local/hugo/hugo /usr/local/bin/hugo \
+	&& rm /tmp/hugo.tar.gz
+	
+# Trick because hugo is dynamically linked - see https://stackoverflow.com/a/35613430/1096905
+RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
 # Things to do!
 ADD entrypoint.sh /entrypoint.sh
