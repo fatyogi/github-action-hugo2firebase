@@ -21,7 +21,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
-    - uses: fatyogi/github-action-hugo2firebase@master
+    - uses: fatyogi/github-action-hugo2firebase@main
       with:
         firebase-token: ${{ secrets.FIREBASE_TOKEN }}
 ````
