@@ -1,7 +1,7 @@
 FROM pulimento/alpine-hugo-firebase
 MAINTAINER Olaf Andersen <fatyogi@gmail.com>
 
-ENV HUGO_VERSION 0.80.0
+ENV HUGO_VERSION 0.83.1
 ENV HUGO_EXTENDED_BINARY hugo_extended_${HUGO_VERSION}_Linux-64bit
 
 # Upgrade hugo
